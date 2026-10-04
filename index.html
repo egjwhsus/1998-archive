@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1998 Zero to One Archive</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --bg-card: #151d2e;
+      --bg-hover: #1e293b;
+      --border: #243247;
+      --gold: #d4af37;
+      --blue: #38bdf8;
+      --green: #10b981;
+      --purple: #a855f7;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Pretendard", sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* 헤더 */
+    header {
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 8px;
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 24px; color: #fff; margin-bottom: 6px; }
+    p.sub { font-size: 13px; color: var(--muted); }
+
+    /* 네비게이션 탭 */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { background: var(--bg-hover); color: #fff; }
+    .tab-btn.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    /* 검색창 */
+    .search-box {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .search-box:focus { outline: 1px solid var(--gold); }
+
+    /* 탭 콘텐츠 */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* 그리드 */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+    /* 카드 */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card:hover { border-color: var(--blue); }
+
+    .card-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 6px;
+      background: #243247;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--muted);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .card-name { font-size: 16px; font-weight: 700; color: #fff; }
+    .card-role { font-size: 12px; color: var(--gold); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      background: #0b0f19;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+    }
+
+    .desc { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+    .desc strong { color: #fff; }
+
+    /* 테이블 */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    th { background: #1c2638; color: #fff; font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">1998 ALTER-HISTORIC ARCHIVE</div>
+    <h1>Zero to One 투자 생활 종합 도감</h1>
+    <p class="sub">1998년 1월 9일 외환위기 | 7대 재벌 팩션 · 인물 명부 · RKB 프로야구 리그</p>
+  </header>
+
+  <!-- 상단 네비게이션 -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="openTab('corporations')">🏢 기업 & 팩션</button>
+    <button class="tab-btn" onclick="openTab('characters')">👥 인물 명부</button>
+    <button class="tab-btn" onclick="openTab('rkb')">⚾ RKB 프로야구</button>
+  </div>
+
+  <input type="text" id="searchInput" class="search-box" placeholder="이름, 그룹, 연고지, 특성 검색..." onkeyup="filterItems()">
+
+  <!-- 1. 기업 & 팩션 탭 -->
+  <div id="corporations" class="tab-content active">
+    <div class="grid" id="corpGrid">
+      
+      <div class="card item">
+        <div class="card-name">신성 그룹 (Shinsung)</div>
+        <div class="card-role">모티브: 삼성 | 본사: 서울 중구 태평로</div>
+        <div class="tag-list">
+          <span class="tag">반도체/전자</span><span class="tag">바이오</span><span class="tag">야구: 대구 신성 그리핀스</span>
+        </div>
+        <div class="desc">
+          대한민국 재계 1위의 절대 권력. 압도적 자본력을 바탕으로 메모리 반도체 독점 및 HBM 패권을 주도하며 미래 바이오에 선제 투자.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">LK 그룹 (LK)</div>
+        <div class="card-role">모티브: SK + LG | 본사: 서울 여의도 트윈타워</div>
+        <div class="tag-list">
+          <span class="tag">무선통신망</span><span class="tag">백색가전</span><span class="tag">야구: 서울 LK 나이츠</span>
+        </div>
+        <div class="desc">
+          생활 가전 1위의 전통과 차세대 CDMA 이동통신 캐시카우를 보유. 적대적 M&A와 인재 영입을 통한 지배구조 확장의 대가.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">베르테르 모비스 (Verter Mobis)</div>
+        <div class="card-role">모티브: 현대차 + HD현대 | 본사: 서울 종로구 계동</div>
+        <div class="tag-list">
+          <span class="tag">완성차</span><span class="tag">조선/중공업</span><span class="tag">야구: 울산 베르테르 크라켄스</span>
+        </div>
+        <div class="desc">
+          울산 공장 벨트를 기반으로 한 중후장대 산업의 제왕. 대진자동차 인수전에 사활을 걸고 글로벌 수출 드라이브를 추진.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">베르테르 호텔 (Verter Hotel)</div>
+        <div class="card-role">모티브: 롯데 + 신세계 | 본사: 서울 중구 소공동</div>
+        <div class="tag-list">
+          <span class="tag">백화점/면세점</span><span class="tag">유통/식품</span><span class="tag">야구: 부산 아틀란틱 샤크스</span>
+        </div>
+        <div class="desc">
+          부산 및 동남권 상권을 쥐고 있는 내수 B2C 최강자. 베르테르 모비스와의 그룹 승계 계열 분리 암투가 수면 아래서 진행 중.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">대진 그룹 (Daejin)</div>
+        <div class="card-role">모티브: 대우 | 본사: 서울역 대진빌딩</div>
+        <div class="tag-list">
+          <span class="tag">부도 위기</span><span class="tag">워크아웃 매물</span><span class="tag">야구: 파산 매각 대기</span>
+        </div>
+        <div class="desc">
+          무리한 차입 경영과 쌍용차 인수로 1999년 11월 부도 워크아웃에 직면한 비운의 공룡. 부실 계열사들이 유저와 경쟁사의 인수 먹잇감이 됨.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">한무 그룹 (Han-Mu)</div>
+        <div class="card-role">모티브: 포스코 + 한화 | 본사: 서울 강남 테헤란로</div>
+        <div class="tag-list">
+          <span class="tag">고로 제철</span><span class="tag">K-방산/기계</span><span class="tag">야구: 대전 한무 레일로더스</span>
+        </div>
+        <div class="desc">
+          포항·광양의 쇳물을 독점한 국가 인프라 주도 세력. 방산 전차·자주포 수출과 기계 부문에서 탄탄한 뚝심을 자랑함.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">한선 그룹 (Han-Sun)</div>
+        <div class="card-role">모티브: 한진 + HMM | 본사: 서울 중구 서소문</div>
+        <div class="tag-list">
+          <span class="tag">한국항공</span><span class="tag">해운 컨테이너</span><span class="tag">야구: 인천 한선 마리너스</span>
+        </div>
+        <div class="desc">
+          육·해·공 물류망의 지배자. 외환위기 환율 폭등으로 막대한 외화 부채 위기를 겪으나 이후 글로벌 해운 운임 폭등의 수혜주.
+        </div>
+      </div>
+
+      <div class="card item">
+        <div class="card-name">태양 그룹 (Taeyang)</div>
+        <div class="card-role">모티브: KB + 삼성생명 | 본사: 서울 여의도</div>
+        <div class="tag-list">
+          <span class="tag">리딩뱅크</span><span class="tag">증권/보험</span><span class="tag">야구: 광주 태양 크루세이더스</span>
+        </div>
+        <div class="desc">
+          IMF 외환위기 체제 속에서 부실 종금사 및 시중은행을 흡수합병하며 초대형 종합 금융지주사로 도약하는 자본의 중심축.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. 인물 명부 탭 -->
+  <div id="characters" class="tab-content">
+    <div class="grid" id="charGrid">
+
+      <!-- 이태호 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <!-- 사진 경로 예: images/bth.png -->
+            <img src="./images/bth.png" alt="이태호" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">이태호 (BTH)</div>
+            <div class="card-role">신성그룹 회장 | 48세 (1998)</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">ESTP+3w4</span><span class="tag">백발청안</span><span class="tag">승부사</span>
+        </div>
+        <div class="desc">
+          "결심하기 전에는 충분한 검토가 필요하지만 계획이 확정되면 만난을 무릅쓰고 과단성 있게 실행해야 한다." 야성과 실리주의의 총수.
+        </div>
+      </div>
+
+      <!-- 최원석 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/bws.png" alt="최원석" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">최원석 (BWS)</div>
+            <div class="card-role">LK그룹 회장 | 48세 (1998)</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">ENTP+3w2</span><span class="tag">흑발녹안</span><span class="tag">적대적 인수 대가</span>
+        </div>
+        <div class="desc">
+          "자금을 다루는 건 사람이다. 따라서 사람을 잘 대해야 기업이 굴러간다." 우아한 존댓말 뒤에 서늘한 뼈를 숨긴 지략가.
+        </div>
+      </div>
+
+      <!-- 이도현 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/dh.png" alt="이도현" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">이도현 (DH)</div>
+            <div class="card-role">신성대 1학년 / 신성 막내딸 | 19세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">고윤정 모티브</span><span class="tag">흑발청안</span><span class="tag">츤데레</span><span class="tag">ENFP</span>
+        </div>
+        <div class="desc">
+          금지옥엽 공주병 영애. 감정 표현에 극도로 서툴러 틱틱대지만 뒤에서는 챙겨줌. LP 수집과 야간 스포츠카 과속 주행이 해방구.
+        </div>
+      </div>
+
+      <!-- 최나경 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/nk.png" alt="최나경" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">최나경 (NK)</div>
+            <div class="card-role">태양대 1학년 / LK 장녀 | 19세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">이나경 모티브</span><span class="tag">흑발녹안</span><span class="tag">정의파 주인공</span><span class="tag">ESTJ</span>
+        </div>
+        <div class="desc">
+          불의를 못 참는 올곧은 장녀. 꺾이지 않는 근성과 밝은 에너지를 지님. 펜싱과 플루트가 취미이며 비겁한 수를 극도로 혐오.
+        </div>
+      </div>
+
+      <!-- 이상혁 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/bsh.png" alt="이상혁" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">이상혁 (BSH)</div>
+            <div class="card-role">신성대 1학년 / 신성 장남 | 19세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">ENTP+358</span><span class="tag">백발청안</span><span class="tag">선민사상 갑질</span>
+        </div>
+        <div class="desc">
+          인간을 장기판의 말로 보는 오만한 후계자. 아버지 이태호의 그늘에 대한 지독한 열등감을 감추고 있으며 독종 앞에선 흔들림.
+        </div>
+      </div>
+
+      <!-- 최성진 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/bsj.png" alt="최성진" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">최성진 (BSJ)</div>
+            <div class="card-role">MIT 2학년 / LK 차남 | 18세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">INTP+9w1</span><span class="tag">흑발녹안</span><span class="tag">공학 괴짜 천재</span>
+        </div>
+        <div class="desc">
+          사회성이 전무하고 승계 싸움을 귀찮아하는 천재 엔지니어. 오직 차세대 하드웨어와 코드에만 몰두하며 유저의 IT 혜안에 감복.
+        </div>
+      </div>
+
+      <!-- 김지우 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/jw.png" alt="김지우" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">김지우 (JW)</div>
+            <div class="card-role">버지니아 공대 1 / 대진 장녀 | 19세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">문가영 모티브</span><span class="tag">ESTP+368</span><span class="tag">몰락 가문 재건</span>
+        </div>
+        <div class="desc">
+          1999년 그룹이 해체되는 비극 속에서도 2001년부터 바닥에서 가문 재건을 위해 칼을 가는 진취적 여걸.
+        </div>
+      </div>
+
+      <!-- 정가을 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/gl.png" alt="정가을" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">정가을 (GL)</div>
+            <div class="card-role">신성대 1 / 베르테르모비스 장녀 | 19세</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">닝닝 모티브</span><span class="tag">ISTP+835</span><span class="tag">냉소적 계산파</span>
+        </div>
+        <div class="desc">
+          기계와 숫자에만 반응하는 차가운 후계자. 명확한 손익 계산서가 나오지 않는 대화와 거래는 일절 거부함.
+        </div>
+      </div>
+
+      <!-- 신규진 / 신아진 -->
+      <div class="card item">
+        <div class="card-top">
+          <div class="avatar">
+            <img src="./images/kj.png" alt="신규진" onerror="this.parentElement.innerText='NO IMG'">
+          </div>
+          <div>
+            <div class="card-name">신규진 & 신아진</div>
+            <div class="card-role">태양대 / 베르테르호텔 영애들</div>
+          </div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">규진/모카 모티브</span><span class="tag">메스가키</span><span class="tag">소심/애정결핍</span>
+        </div>
+        <div class="desc">
+          <strong>신규진(19):</strong> 사치와 앙칼진 메스가키 톤.<br>
+          <strong>신아진(20):</strong> 소심하고 애정 결핍이 깊은 온실 속의 조용한 언니.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. RKB 프로야구 리그 탭 -->
+  <div id="rkb" class="tab-content">
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-name">⚾ RKB (Republic of Korea Baseball) 규정</div>
+      <div class="desc">
+        • <strong>페넌트레이스:</strong> 단축 84경기 체제<br>
+        • <strong>포스트시즌 (3판 2선승):</strong> 와일드카드(4위 vs 3위) ➡️ 플레이오프(WC 승자 vs 2위) ➡️ 파이널(PO 승자 vs 1위)<br>
+        • <strong>경영 반영:</strong> 우승 시 B2C 계열사 주가 펌핑 / 꼴찌(DTD) 시 브랜드 이미지 타격
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="rkbTable">
+        <thead>
+          <tr>
+            <th>구단명</th>
+            <th>연고지</th>
+            <th>모기업</th>
+            <th>우승</th>
+            <th>관중</th>
+            <th>팀 컬러 & 기믹</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="item">
+            <td><strong>서울 LK 나이츠</strong></td>
+            <td>서울</td>
+            <td>LK 그룹</td>
+            <td>3회</td>
+            <td>2위</td>
+            <td>리그 최초 세이버메트릭스 도입, 시스템 야구, 젊은/여성 팬덤</td>
+          </tr>
+          <tr class="item">
+            <td><strong>대구 신성 그리핀스</strong></td>
+            <td>대구</td>
+            <td>신성 그룹</td>
+            <td>4회</td>
+            <td>1위</td>
+            <td>메가톤급 자금력의 올스타 슈퍼팀, 잦은 부상 롤러코스터, 대구 골수팬</td>
+          </tr>
+          <tr class="item">
+            <td><strong>부산 아틀란틱 샤크스</strong></td>
+            <td>부산</td>
+            <td>베르테르 호텔</td>
+            <td>2회</td>
+            <td>3위</td>
+            <td>극단적 타고투저 화력 야구, 투수진 취약, 화끈한 사직 팬덤</td>
+          </tr>
+          <tr class="item">
+            <td><strong>광주 태양 크루세이더스</strong></td>
+            <td>광주</td>
+            <td>태양 그룹</td>
+            <td>6회</td>
+            <td>4위</td>
+            <td>디펜딩 챔피언(최다 우승), 군대식 규율, 가을야구 DNA, 울트라스</td>
+          </tr>
+          <tr class="item">
+            <td><strong>인천 한선 마리너스</strong></td>
+            <td>인천</td>
+            <td>한선 그룹</td>
+            <td>0회</td>
+            <td>5위</td>
+            <td>해풍 맞바람 극투수친화 구장, 철벽 선발진, 빈타선, 홈 자부심</td>
+          </tr>
+          <tr class="item">
+            <td><strong>대전 한무 레일로더스</strong></td>
+            <td>대전</td>
+            <td>한무 그룹</td>
+            <td>0회</td>
+            <td>6위</td>
+            <td>역대 최다 준우승(콩라인), 화끈한 FA 파워 배팅 타선, 보살 팬덤</td>
+          </tr>
+          <tr class="item">
+            <td><strong>울산 베르테르 크라켄스</strong></td>
+            <td>울산</td>
+            <td>베르테르 모비스</td>
+            <td>0회</td>
+            <td>7위</td>
+            <td>거친 클러치 대포 군단, 끈적한 승부사, 공장 지대 광전사 팬덤</td>
+          </tr>
+          <tr class="item">
+            <td><strong>수원 매일 로얄스</strong></td>
+            <td>수원</td>
+            <td>매일 그룹</td>
+            <td>1회</td>
+            <td>8위</td>
+            <td>1995년 1회 기적 우승, 짠물 불펜 머니볼, 가족 단위 클린 응원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function openTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs .tab-btn').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+    filterItems();
+  }
+
+  function filterItems() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const activeTab = document.querySelector('.tab-content.active');
+    const items = activeTab.querySelectorAll('.item');
+
+    items.forEach(item => {
+      const text = item.innerText.toLowerCase();
+      item.style.display = text.includes(query) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
